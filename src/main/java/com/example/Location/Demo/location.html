@@ -3,16 +3,84 @@
 <head>
     <meta charset="UTF-8">
     <title>My Location</title>
+    <style type="text/css">
+        html, body {height: 100%}
+         </style>
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=default"></script>
+
+<!--    <link rel="stylesheet" type="text/css" href="./style.css" />-->
+    <script type="module" src="./location.html"></script>
 </head>
 <body>
+<div id="style-selector-control" class="map-control">
+    <input
+            type="radio"
+            name="show-hide"
+            id="hide-poi"
+            class="selector-control"
+    />
+    <label for="hide-poi">Hide</label>
+    <input
+            type="radio"
+            name="show-hide"
+            id="show-poi"
+            class="selector-control"
+            checked="checked"
+    />
+    <label for="show-poi">Show</label>
+</div>
+
 <div id="location"></div>
-<div id="map" style="height: 750px; width: 100%"></div>
-<script async defer
-        src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCMC9uiVxoDJslC3t7bDuoDVE8zMPXKx0Q&callback=initMap">
+<div id="map" style="height: 100%; width: 100%">
+    <script async defer
+            src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCMC9uiVxoDJslC3t7bDuoDVE8zMPXKx0Q&callback=initMap">
+
+    google.maps.event.trigger({$id}, \"resize\");
+
+    google.maps.event.addListenerOnce({$id}, 'idle', function() {
+    setCenterMap(new google.maps.LatLng({$this->defaultLatitude},
+    {$this->defaultLongitude}));
+});
 </script>
+</div>
+
+
 
 <script>
+
+    let map;
+
     function initMap() {
+
+
+         map = new google.maps.Map(document.getElementById("map"), {
+         mapTypeControl: false,
+         });
+
+<!--          // Apply new JSON when the user chooses to hide/show features.-->
+<!--  document.getElementById("hide-poi").addEventListener("click", () => {-->
+<!--    map.setOptions({ styles: styles["hide"] });-->
+<!--  });-->
+<!--  document.getElementById("show-poi").addEventListener("click", () => {-->
+<!--    map.setOptions({ styles: styles["default"] });-->
+<!--  });-->
+<!--}-->
+
+<!--const styles = {-->
+<!--  default: [],-->
+<!--  hide: [-->
+<!--    {-->
+<!--      featureType: "poi.business",-->
+<!--      stylers: [{ visibility: "off" }],-->
+<!--    },-->
+<!--    {-->
+<!--      featureType: "transit",-->
+<!--      elementType: "labels.icon",-->
+<!--      stylers: [{ visibility: "on" }],-->
+<!--    },-->
+<!--  ],-->
+<!--};-->
+
         if (navigator.geolocation) {
             navigator.geolocation.getCurrentPosition(function(position) {
                 var pos = {
@@ -43,6 +111,13 @@
             'Error: Your browser doesn\'t support geolocation.');
         infoWindow.open(map);
     }
+
+
+
+
+
+window.initMap = initMap;
+
 
 </script>
 </body>

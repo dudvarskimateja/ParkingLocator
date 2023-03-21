@@ -1,10 +1,26 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <title>$Title$</title>
+    <meta charset="UTF-8">
+    <title>User Response</title>
 </head>
 <body>
-$END$
+
+<script>
+
+function getLocationData() {
+  fetch('/http://127.0.0.1:5500/src/main/java/com/example/Location/Demo/location.html') 
+    .then(response => response.json())
+    .then(data => {
+      const locationElement = document.createElement('div');
+      locationElement.innerHTML = `Latitude: ${data.latitude}, Longitude: ${data.longitude}`;
+      document.body.appendChild(locationElement);
+    })
+    .catch(error => console.error('Error retrieving location data:', error));
+}
+
+
+</script>
+
 </body>
 </html>

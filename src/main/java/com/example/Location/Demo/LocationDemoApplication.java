@@ -11,7 +11,4 @@ public class LocationDemoApplication {
 	public static void main(String[] args) {
 		SpringApplication.run(LocationDemoApplication.class, args);
 	}
-
-
-
 }

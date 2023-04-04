@@ -10,10 +10,10 @@ import java.awt.*;
 @Controller
 public class UserInputController {
 
-    // @RequestMapping(value="/", method = RequestMethod.GET)
-    // public String userInput() {
-    //     return "userInput";
-    // }
+//    @RequestMapping(value="/", method = RequestMethod.GET)
+//    public String userInput() {
+//        return "userInput";
+//    }
 
     // @RequestMapping(value="/submit", method = RequestMethod.POST)
     // public String userResponse(Model model, Button reportButton) {

@@ -29,6 +29,9 @@ public class MessageServiceImpl implements MessageService {
 
     private static final String REDIS_CHANNEL = "myapp";
 
+    public MessageServiceImpl(RedisMessageSubscriber redisMessageSubscriber2) {
+    }
+
     @Override
     public void sendMessage(Message message) {
         redisMessagePublisher.publish(message);
@@ -50,6 +53,12 @@ private JedisPool jedisPool;
 
 private JedisPubSub jedisPubSub;
 
+private String redisHost = "127.0.0.1:6379";
+
+private int redisPort = 6379;
+
+private String redisChannel = "location"; 
+
     @Override
     public void startListening() {
         jedisPubSub = new JedisPubSub() {
@@ -68,5 +77,35 @@ private JedisPubSub jedisPubSub;
         try (Jedis jedis = jedisPool.getResource()) {
             jedisPubSub.unsubscribe();
         }
+    }
+
+    public void testRedisMessage() {
+        // Create the Redis message subscriber
+        RedisMessageSubscriber redisMessageSubscriber = new RedisMessageSubscriber(jedisPool);
+    
+        // Create the message service
+        MessageService messageService = new MessageServiceImpl(redisMessageSubscriber);
+    
+        // Publish a message
+        messageService.publish(new Message("test", "Hello, world!"));
+    
+        // Start listening for messages
+        messageService.startListening();
+    
+        // Wait for a few seconds to receive the message
+        try {
+            Thread.sleep(5000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+    
+        // Stop listening for messages
+        messageService.stopListening();
+    }
+
+    @Override
+    public void publish(Message message) {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'publish'");
     }
 }

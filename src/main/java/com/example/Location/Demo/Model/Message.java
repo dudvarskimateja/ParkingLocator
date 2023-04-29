@@ -7,6 +7,9 @@ public class Message implements Serializable{
 
     private String content;
 
+    public Message(String string, String string2) {
+    }
+
     public String getContent() {
         return content;
     }

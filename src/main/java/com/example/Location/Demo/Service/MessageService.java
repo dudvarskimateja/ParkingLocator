@@ -15,4 +15,6 @@ public interface MessageService {
     void startListening();
 
     void stopListening();
+
+    void publish(Message message);
 }
